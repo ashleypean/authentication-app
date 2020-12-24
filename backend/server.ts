@@ -52,11 +52,11 @@ passport.use('google', Google)
 
 //Github 
 const Github = require('./passport-auth/github')
-passport.use('google', Github)
+passport.use('github', Github)
 
 //Twitter
 const Twitter = require('./passport-auth/twitter')
-passport.use('google', Twitter)
+passport.use('twitter', Twitter)
 
 
 app.get('/', (req:any, res:any) => {
