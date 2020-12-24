@@ -2,19 +2,22 @@ const express = require('express')
 const app = express()
 const PORT = 3001
 require('dotenv').config()
+import * as bcrypt from 'bcrypt'
 
 //Database config
 const mongoose = require('mongoose')
 //Schemas
-import LoginSchema from './models/Login'
-import UserInfoSchema from './models/UserInfo'
+import Users from './models/Login'
+import UserInfo from './models/UserInfo'
 
 mongoose.connect(process.env.CONNECTION_STRING, {
   useNewUrlParser: true, 
-  useUnifiedTopology: true
+  useUnifiedTopology: true, 
+  useCreateIndex: true
 })
 
 const db = mongoose.connection
+
 db.once('open', async () => {
   console.log('Database connected')
 })
@@ -24,34 +27,42 @@ db.on('error', async() => {
 
 //Passport config
 const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-const session = require('cookie-session')
+passport.serializeUser((user:any, done:any) => {
+  done(undefined, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  Users.findById(id, (err, user) => {
+      done(err, user);
+  });
+});
+
+//AUTH STRATEGIES
+//Local  
+const local = require('./passport-auth/local')
+passport.use('local', local)
+
+//Facebook  
+const Facebook = require('./passport-auth/facebook')
+passport.use('facebook', Facebook)
+
+//Google
+const Google = require('./passport-auth/google')
+passport.use('google', Google)
+
+//Github 
+const Github = require('./passport-auth/google')
+passport.use('google', Github)
+
+//Twitter
+const Twitter = require('./passport-auth/google')
+passport.use('google', Twitter)
 
 
-app.use(session({secret: process.env.SECRET_KEY}))
-app.use(passport.initialize())
-app.use(passport.session())
-
-passport.use(new LocalStrategy( 
-  function(email, password, done) {
-
-  })
-)
-
-app.get('/', (req, res) => {
+app.get('/', (req:any, res:any) => {
   res.send('hello world')
 })
 
-app.post('/login', 
-  //local authentication strategy 
-  passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login'})
-)
-
-app.post('/register')
-
-app.get('/profile/view/:username')
-
-app.patch('/profile/edit')
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
