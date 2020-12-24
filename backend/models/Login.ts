@@ -1,10 +1,25 @@
-import { Schema } from 'mongoose'
+import mongoose, {Schema, model, Document, Types} from 'mongoose'
+
+
+export interface ILogin extends Document {
+  email: string 
+  password: string
+  created_at: Date
+  updated_at: Date
+}
 
 const LoginSchema = new Schema({
-  email: String, 
-  password: String, 
+  email: {
+    type: String,
+    required: true, 
+    unique: true
+  }, 
+  password: {
+    type: String, 
+    required: true
+  },
   created_at: {
-    type: Date, 
+    type: Date,
     default: new Date()
   }, 
   updated_at: {
@@ -13,4 +28,4 @@ const LoginSchema = new Schema({
   }
 })
 
-export default LoginSchema
+export default model<ILogin>('Users', LoginSchema)
