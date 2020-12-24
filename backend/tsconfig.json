@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "ES6",
+    "lib": [
+        "es6",
+        "dom"
+    ],
+    "module": "commonjs",
+    "outDir": "./dist",
+    /* Strict Type-Checking Options */
+    "strict": true,      
+    "esModuleInterop": true,
+    /* Source Map Options */
+    "sourceRoot": "./backend/server",
+    "inlineSourceMap": true, 
+    "noImplicitAny": false
+  }, 
+  "allowJs": true,
+  "skipLibCheck": true,
+  "esModuleInterop": true,
+  "allowSyntheticDefaultImports": true,
+  "strict": true,
+  "forceConsistentCasingInFileNames": true,
+  "noFallthroughCasesInSwitch": true,
+  "module": "esnext",
+  "moduleResolution": "node",
+  "resolveJsonModule": true,
+  "isolatedModules": true,
+  "noEmit": true
+}
