@@ -51,11 +51,11 @@ const Google = require('./passport-auth/google')
 passport.use('google', Google)
 
 //Github 
-const Github = require('./passport-auth/google')
+const Github = require('./passport-auth/github')
 passport.use('google', Github)
 
 //Twitter
-const Twitter = require('./passport-auth/google')
+const Twitter = require('./passport-auth/twitter')
 passport.use('google', Twitter)
 
 
